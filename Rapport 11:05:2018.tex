@@ -1,0 +1,122 @@
+
+\documentclass[11pt]{report}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\title{Rapport sur les différents capteurs, mousses et cartes de contrôle}
+\author{Auguste Sallen}
+\date{}
+\maketitle
+
+\section{Capteurs de pression}
+
+Les capteurs de pression doivent répondre à différents critères. D'après la 
+documentation technique du capteur NumaTac, ils doivent remplir les conditions suivantes :
+
+\begin{itemize}
+  
+  \item{Capteur de type ''pressure transducer''}
+  
+  \item{0-1 psi range (0-6,89 kPa)}
+  
+  \item{Référence à la pression atmosphérique}
+  
+  \item{0,2 \% de précision (au moins)}
+  
+  \item{Mesure de la pression statique et dynamique}
+  
+\end{itemize}
+
+D'après des critères concernant notre cas d'étude, qui est une peau pour robot humanoïde :
+
+\begin{itemize}
+  
+  \item{Range un peu plus élevée pour anticiper des chocs plus violents}
+  
+  \item{Capteur de petite taille}
+  
+  \item{Capteur de poids peu élevé}
+  
+\end{itemize}
+
+Nous pouvons alors orienter notre sélection de capteurs afin d'en retenir un 
+minimum et de procéder à un choix.
+
+Les capteurs qui ont été retenus sont les suivants (liens URL) :
+
+\begin{itemize}
+  
+  \item{Pressure sensor 13 and 43 - 1 psi}
+  
+  \item{Pressure sensor 1220 - 1 psi}
+  
+  \item{Pressure sensor P-2000}
+  
+  \item{Pressure sensor MS5525DSO}
+  
+\end{itemize}
+
+Nous pouvons alors procéder à un choix de capteur. Celui-ci sera guidé par le 
+cahier des charges énoncé précédemment. Tous les capteurs présents ont été 
+grossièrement sélectionnés en fonction de ces critères, en particulier la range 
+de pression et la taille du capteur. 
+
+Tous les capteurs énoncés font en effet un volume d'1 cm$^3$ environ, ce qui est 
+le plus petit pour cette range de pression.
+
+Les deux premiers capteurs sont limités à 0-1 psi, soit 0-6,89 kPa. Ceci 
+convient dans le cadre du capteur NumaTac, qui est ajouté sur un doigt 
+robotique. Cependant, un doigt ne reçoit pas les mêmes impacts qu'un coude ou 
+qu'un genou. Il est donc possible que même à trois, ils ne soient pas en mesure 
+de prendre les mesures de pression sans saturer. Il est également possible que 
+les surcharges de pression imposées aux capteurs soient destructives assez 
+rapidement.
+
+Les deux capteurs suivants sont des capteurs représentant une gamme dans 
+laquelle il est possible de choisir le capteur que l'on souhaite. Il est donc 
+possible de prendre dans ces gammes des capteurs correspondant aux besoins 
+éprouvés.
+
+Le capteur P-2000 proposant une gamme ayant plus d'échelons sur les range de pression 
+mesurées, il sera retenu en priorité.
+
+Un capteur de qualité acceptable serait alors de la dénomination 
+P-2000-102G-15-BN. Sa range de pression est de 0-98,1 kPa.
+Il peut donc mesurer des efforts allant jusqu'à 60 kg appliqués sur un 
+coude (environ), s'il est présent en triple exemplaire sur le bras. 
+
+Capteur retenu: P-2000-102G-15-BN.
+
+
+
+
+\section{Carte de commande}
+
+Nous allons faire un choix concernant la carte de commande pour le driver 
+moteur. Cette carte doit pouvoir recevoir et sortir des tensions comprises entre 
+-10 V et +10 V. 
+
+
+\section{Bibliographie et liens}
+
+\subsection{Capteurs de pression}
+
+
+  \url{http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=13_and_43_1psi&DocType=Data+Sheet&DocLang=English&DocFormat=pdf&PartCntxt=CAT-BLPS0052}
+  
+  \url{http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=1220_1PSI&DocType=Data+Sheet&DocLang=English&DocFormat=pdf&PartCntxt=CAT-BLPS0046}
+  
+  \url{https://www.nidec-copal-electronics.com/e/catalog/pressure-sensor/p-2000.pdf}
+  
+  \url{http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=MS5525DSO&DocType=DS&DocLang=English}
+  
+
+
+\end{document}
+			
