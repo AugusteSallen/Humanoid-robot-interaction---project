@@ -45,7 +45,7 @@ D'après des critères concernant notre cas d'étude, qui est une peau pour robo
   
 \end{itemize}
 
-Nous pouvons alors orienter notre sélection de capteurs afin d'en retenir un 
+Notre sélection de capteurs peut alors être orientée afin d'en retenir un 
 minimum et de procéder à un choix.
 
 Les capteurs qui ont été retenus sont les suivants (liens URL) :
@@ -62,7 +62,7 @@ Les capteurs qui ont été retenus sont les suivants (liens URL) :
   
 \end{itemize}
 
-Nous pouvons alors procéder à un choix de capteur. Celui-ci sera guidé par le 
+Il est alors possible de procéder à un choix de capteur. Celui-ci sera guidé par le 
 cahier des charges énoncé précédemment. Tous les capteurs présents ont été 
 grossièrement sélectionnés en fonction de ces critères, en particulier la range 
 de pression et la taille du capteur. 
@@ -98,9 +98,130 @@ Capteur retenu: P-2000-102G-15-BN.
 
 \section{Carte de commande}
 
-Nous allons faire un choix concernant la carte de commande pour le driver 
+Il faut à présent faire un choix concernant la carte de commande pour le driver 
 moteur. Cette carte doit pouvoir recevoir et sortir des tensions comprises entre 
 -10 V et +10 V. 
+
+Les cartes arduino sont les premières à venir à l'esprit: elles sont simples 
+d'utilisation, faciles à trouver, leurs caractéristiques sont connues et elles 
+sont directement compatibles avec des modes sur Matlab et Simulink.
+
+Cependant, elles ne permettent pas de sortir la tension nécessaire sur les 
+bornes I/O. Il est donc nécessaire de ce pencher sur un autre moyen que 
+celui-ci. D'autres cartes sont directement compatibles avec Matlab et/ou 
+Simulink, mais elles ne remplissent pas non plus les critères qui ont été posés.
+
+Il est à noter qu'il serait possible d'utiliser ces cartes avec un montage 
+amplificateur, ou sommateur. Cependant, cette méthode est plus complexe, demande 
+d'avoir plus de matériel et augmente le volume et le poids requis par l'ensemble 
+de commande. Elle est malgré tout envisageable dans la mesure où il ne s'agit 
+encore que de tests
+
+Il a été décidé d'utiliser l'outil xPC Target de Matlab. Cet outil permet 
+de communiquer avec un ordinateur (et en particulier une carte de commande) via 
+USB tout en lui transmettant des ordres en temps réel depuis l'ordinateur 
+d'interface (celui sur lequel est utilisé Matlab). 
+
+A l'aide de cet outil, il est possible de contrôler le driver en passant par une 
+carte de type Analog I/O. 
+
+Différents problèmes ont alors été rencontrés:
+
+\begin{itemize}
+  
+  \item{L'outil xPC Target n'est pas compatible avec OSX ni Linux}
+  
+  \item{La solution serait d'utiliser Embedded Coder}
+  
+  \item{Les cartes trouvées utilisent un bus PCI: il faut donc un adaptateur}
+  
+  \item{Les cartes trouvées fonctionnent rarement sous OSX: il faut (sans doute) changer d'ordinateur}
+  
+\end{itemize}
+
+Le plus simple, dans ces conditions, serait d'utiliser un PC ayant pour système 
+d'exploitation Windows. Il serait alors possible d'utiliser xPC Target, ou 
+encore les driver fournis directement avec les cartes Analog I/O. 
+
+Embedded Coder traduit les codes écrits sous Matlab ou les blocs sous Simulink 
+directement en C / C++. Son usage est donc limité aux cartes acceptant la 
+programmation dans ces langages.
+
+Plusieurs cartes semblant convenir ont par ailleurs été trouvées:
+
+\begin{itemize}
+  
+  \item{HRP Interface Board 07-0003}
+  
+  \item{Analog I/O board 18AISS8AO8}
+  
+  \item{Analog I/O board XT1540}
+  
+  \item{Analog I/O board VCM-DAS-3}
+  
+  \item{Analog I/O board APC730}
+  
+  \end{itemize}
+
+La première carte est celle qui a été retrouvée en tant que carte utilisée avec 
+le driver moteur HRP qui est déjà possédé. Cette carte n'utilise cependant 
+qu'une version ancienne de Windows et de Linux. Il s'agit malgré tout 
+probablement de la carte qui est utilisée dans le robot humanoïde HRP, c'est 
+donc ce genre de carte qu'il faut s'attendre à devoir utiliser par la suite dans 
+notre cadre d'étude.
+
+Les cartes suivantes répondent aux exigences de base, à ceci près qu'elle ne 
+fonctionnent que sous Windows et Linux. Aucune carte ne fonctionnant avec un 
+driver compatible OSX n'a été trouvée. 
+
+La comparaison devra donc se faire sans critère. Au vu des caractéristiques, 
+chacune des cartes semble convenir. De plus, rien ne les départage en 
+particulier. Ce sera donc le prix qui sera déterminant.
+
+\begin{itemize}
+  
+  \item{APC730 : 1560 euros}
+%https://appleinsider.com/articles/17/01/13/install-an-inexpensive-usb-c-pci-e-card-in-a-mac-pro-for-full-usb-31-data-transfer-speeds
+
+  \item{VCM-DAS-3A : 495 euros}
+  
+  \item{XT1540 : 525 euros}
+  
+  \item{18AISS8AO8 : no info}
+%http://www.generalstandards.com/analogio4.php#12analogio
+  
+  \item{HRP IB 07-0003 : ~250 euros}
+%http://www.osakac.ac.jp/labs/koeda/pdf/RSJ2008_kinugawa.pdf
+%http://www.zuco.jp/pdt/ifb_hrp2.html
+%http://www.zuco.jp/doc/ctg_hrp2_140401.pdf
+%http://www.zuco.jp/doc/man_hrp2_140401.pdf
+%http://www.zuco.jp/pdt/eol_hrp1.html
+%http://www.zuco.jp/doc/man_hrp1_140401.pdf
+
+\item{Arduino MEGA : 38,5 euros}
+
+\item{Arduino UNO : 19 euros}
+
+\item{Arduino Due : 34 euros}
+  
+  \end{itemize}
+
+
+
+La décision la plus économique semble être celle de prendre une carte Arduino, 
+une UNO suffisant amplement, et d'ajouter un montage amplificateur à sa 
+sortie afin de doubler les 5 V qui sortent de la carte. Il est même possible 
+qu'il nous soit inutile de contrôler le moteur sur toute sa plage d'utilisation, 
+et qu'une commande sur la moitié de la vitesse max soit suffisante.
+
+Dans le cadre d'un usage dans un robot humanoïde, le choix de prendre le modèle 
+HRP semble être le meilleur, même s'il nécessite un apprentissage 
+supplémentaire.
+
+
+\section{Mousse utilisée}
+
+
 
 
 \section{Bibliographie et liens}
